@@ -7,7 +7,7 @@ from unittest.mock import Mock, patch
 
 import pytest
 
-import httpx
+import httpx2
 
 import gssapi
 import gssapi.exceptions
@@ -72,11 +72,11 @@ def gssapi_name(s):
 
 
 def null_request(method='GET', url="http://www.example.org/", **kwargs):
-    return httpx.Request(method, url, **kwargs)
+    return httpx2.Request(method, url, **kwargs)
 
 
 def null_response(status=200, request=null_request(), **kwargs):
-    return httpx.Response(status, request=request, **kwargs)
+    return httpx2.Response(status, request=request, **kwargs)
 
 
 def check_init(**kwargs):
@@ -313,7 +313,7 @@ def test_handle_response_401(patched_ctx):
     response_401 = null_response(status=401, headers=neg_token)
     flow = auth.handle_response(response_401)
     request = next(flow)
-    assert isinstance(request, httpx.Request)
+    assert isinstance(request, httpx2.Request)
     assert request.headers['Authorization'] == b64_negotiate_response
     response_ok = null_response(headers=neg_server, request=request)
     with pytest.raises(StopIteration):  # no more requests
@@ -330,12 +330,12 @@ def test_handle_response_401_rejected(patched_ctx):
     flow = auth.handle_response(response_401)
 
     request = next(flow)
-    assert isinstance(request, httpx.Request)
+    assert isinstance(request, httpx2.Request)
     assert request.headers['Authorization'] == b64_negotiate_response
 
     response_401 = null_response(status=401, headers=neg_token, request=request)
     request = flow.send(response_401)
-    assert isinstance(request, httpx.Request)
+    assert isinstance(request, httpx2.Request)
     assert request.headers['Authorization'] == b64_negotiate_response
 
     with pytest.raises(StopIteration):  # no more requests, max is 2
@@ -349,7 +349,7 @@ def test_delegation(patched_ctx):
     response_401 = null_response(status=401, headers=neg_token)
     flow = auth.handle_response(response_401)
     request = next(flow)
-    assert isinstance(request, httpx.Request)
+    assert isinstance(request, httpx2.Request)
     assert request.headers['Authorization'] == b64_negotiate_response
     response_ok = null_response(headers=neg_server, request=request)
     with pytest.raises(StopIteration):  # no more requests

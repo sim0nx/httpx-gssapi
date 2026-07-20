@@ -10,8 +10,8 @@ import gssapi
 from gssapi import SecurityContext
 from gssapi.exceptions import GSSError
 
-import httpx
-from httpx import Auth, Request, Response
+import httpx2
+from httpx2 import Auth, Request, Response
 
 from .exceptions import MutualAuthenticationError, SPNEGOExchangeError
 
@@ -55,9 +55,9 @@ def _sanitize_response(response: Response):
     """
     response.is_stream_consumed = True
     response._content = b""
-    response._cookies = httpx.Cookies()
+    response._cookies = httpx2.Cookies()
     headers = response.headers
-    response.headers = httpx.Headers({'content-length': '0'})
+    response.headers = httpx2.Headers({'content-length': '0'})
     for header in ('date', 'server'):
         if header in headers:
             response.headers[header] = headers[header]
@@ -215,7 +215,7 @@ class HTTPSPNEGOAuth(Auth):
             # Authentication successful
             log.debug("handle_other(): authentication successful")
         elif is_http_error or self.mutual_authentication == OPTIONAL:
-            if response.status_code != httpx.codes.OK:
+            if response.status_code != httpx2.codes.OK:
                 log.error(
                     "handle_mutual_auth(): Mutual authentication unavailable"
                     " on %d response",

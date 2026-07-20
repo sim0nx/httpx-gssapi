@@ -8,7 +8,7 @@ This module contains the set of exceptions.
 
 from typing import Optional
 
-from httpx import RequestError, Request, Response
+from httpx2 import RequestError, Request, Response
 
 
 class MutualAuthenticationError(RequestError):

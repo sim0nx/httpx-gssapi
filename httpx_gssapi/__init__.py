@@ -7,9 +7,9 @@ designed to be a next generation HTTP client for Python. This library is a port
 of requests_gssapi to HTTPX and adds optional GSSAPI authentication support and
 supports mutual authentication. Basic GET usage:
 
-    >>> import httpx
+    >>> import httpx2
     >>> from httpx_gssapi import HTTPSPNEGOAuth
-    >>> r = httpx.get("http://example.org", auth=HTTPSPNEGOAuth())
+    >>> r = httpx2.get("http://example.org", auth=HTTPSPNEGOAuth())
 
 Both the sync and async HTTPX APIs should be fully supported.
 """
