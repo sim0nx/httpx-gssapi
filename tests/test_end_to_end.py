@@ -1,13 +1,8 @@
 #!/usr/bin/env python
 """Tests for httpx_gssapi."""
-<<<<<<< HEAD
 import gssapi
-import httpx
-import k5test  # type: ignore[import-untyped]
-=======
-
 import httpx2
->>>>>>> ffe02f7 (use httpx2)
+import k5test
 import pytest
 
 import httpx_gssapi
